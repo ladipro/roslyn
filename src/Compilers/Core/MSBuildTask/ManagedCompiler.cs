@@ -355,7 +355,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
         {
             set
             {
-                if (UsedCommandLineTool)
+                //if (UsedCommandLineTool)
                 {
                     NormalizePaths(value);
                 }
@@ -1031,7 +1031,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
 
             foreach (var item in taskItems)
             {
-                item.ItemSpec = Utilities.GetFullPathNoThrow(item.ItemSpec);
+                item.ItemSpec = MakePath(item.ItemSpec); //Utilities.GetFullPathNoThrow(item.ItemSpec);
             }
         }
 

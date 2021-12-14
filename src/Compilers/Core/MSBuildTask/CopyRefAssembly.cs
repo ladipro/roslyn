@@ -33,18 +33,20 @@ namespace Microsoft.CodeAnalysis.BuildTasks
 
         public override bool Execute()
         {
-            if (!File.Exists(SourcePath))
+            var sourcePath = MakePath(SourcePath);
+            var destinationPath = MakePath(DestinationPath);
+            if (!File.Exists(sourcePath))
             {
                 Log.LogErrorWithCodeFromResources("General_ExpectedFileMissing", SourcePath);
                 return false;
             }
 
-            if (File.Exists(DestinationPath))
+            if (File.Exists(destinationPath))
             {
                 var source = Guid.Empty;
                 try
                 {
-                    source = ExtractMvid(SourcePath);
+                    source = ExtractMvid(sourcePath);
                 }
                 catch (Exception e)
                 {
@@ -59,7 +61,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
                 {
                     try
                     {
-                        Guid destination = ExtractMvid(DestinationPath);
+                        Guid destination = ExtractMvid(destinationPath);
 
                         if (!source.Equals(Guid.Empty) && source.Equals(destination))
                         {
@@ -74,14 +76,14 @@ namespace Microsoft.CodeAnalysis.BuildTasks
                 }
             }
 
-            return Copy();
+            return Copy(sourcePath, destinationPath);
         }
 
-        private bool Copy()
+        private bool Copy(string sourcePath, string destinationPath)
         {
             try
             {
-                File.Copy(SourcePath, DestinationPath, overwrite: true);
+                File.Copy(sourcePath, destinationPath, overwrite: true);
             }
             catch (Exception e)
             {
