@@ -600,7 +600,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
             string workingDirectory = GetWorkingDirectory();
             if (string.IsNullOrEmpty(workingDirectory))
             {
-                workingDirectory = Directory.GetCurrentDirectory();
+                workingDirectory = GetBasePath() ?? Directory.GetCurrentDirectory();
             }
             return workingDirectory;
         }
