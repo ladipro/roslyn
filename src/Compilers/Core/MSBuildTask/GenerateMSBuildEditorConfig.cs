@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
         {
             try
             {
-                var targetFileName = FileName.ItemSpec;
+                var targetFileName = MakePath(FileName.ItemSpec);
                 if (File.Exists(targetFileName))
                 {
                     string existingContents = File.ReadAllText(targetFileName);
